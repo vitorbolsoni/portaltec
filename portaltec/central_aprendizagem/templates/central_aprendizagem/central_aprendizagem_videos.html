@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página de uso da TI da Unimed Noroeste Capixaba">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style_central_aprendizagem_videos.css' %}">
+    <link rel="icon" href="{% static 'img/icone_unimed1.png' %}">
+    <title>TI Hunoc - Vídeo Aulas</title>
+</head>
+
+<body>
+    <header class="cabeca">
+        <a href="{% url 'index' %}"><img class="cabeca_img" src="{% static 'img/Unimed_Logo1.png' %}" alt="Imagem da Logo Unimed"></a>
+        <nav class="cabeca_menu">
+            <a class="cabeca_menu_link" href="{% url 'index' %}">Home</a>
+            <div class="cabeca_menu_dropdown">
+                <a class="cabeca_menu_link" href="{% url 'aplicativos_index' %}">Acesso aos Aplicativos</a>
+            </div>
+            <div class="cabeca_menu_dropdown">
+                <a class="cabeca_menu_link" href="{% url 'central_aprendizagem' %}">Central de Aprendizagem</a>
+                    <div class="cabeca_menu_link_filho">
+                        <a href="{% url 'faq' %}">FAQ</a>
+                    </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="conteudo" style="background-image: url({% static 'img/shape-background.svg' %});">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+        <section class="conteudo_pri_secao">
+            <div class="conteudo_pri_secao_txt">
+                <h1 class="conteudo_pri_secao_txt_titulo"><strong>Video Aulas Tasy</strong></h1>
+                <h2 class="conteudo_pri_secao_txt_subtitulo"></h2>
+            </div>
+        </section>
+
+        <section class="conteudo_botao">
+            <div class="conteudo_botao_itens">
+                {% if lista_assunto %}
+                    {% for assuntos in lista_assunto %}
+                        <div class="conteudo_botao_dropdown">
+                            <a class="conteudo_botao_link"><button class="conteudo_botao_txt">{{ assuntos.ds_assunto }}</button></a>
+                                {% for videos in lista_video %}
+                                    {% if videos.assunto.id == assuntos.id %}
+                                        <div class="conteudo_botao_link_filho">
+                                            <a class="ratio ratio-4x3" style="overflow: hidden; width: 300px; height: 300px;">{{ videos.posicao_video }} - {{ videos.ds_video }}
+                                                <video class="embed-responsive embed-responsive-16by9"  controls="controls" disablePictureInPicture controlslist="nodownload noplaybackrate">
+                                                    <source src="{{ videos.dir_video.url }}" type="video/mp4"/>
+                                                </video>
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <a>Não há vídeos disponíveis no momento!</a>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <img class="rodape_img" src="{% static 'img/icone_unimed_n.png' %}" alt="Imagem da Logo de Rodape Unimed ">
+        <h3 class="rodape_assinatura">Unimed Noroeste Capixaba</h3>
+    </footer>
+</body>
+
+</html>

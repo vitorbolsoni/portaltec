@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página de uso da TI da Unimed Noroeste Capixaba">
+    <link rel="stylesheet" href="{% static 'css/style_index.css' %}">
+    <link rel="icon" href="{% static 'img/icone_unimed1.png' %}">
+    <title>TI Hunoc</title>
+</head>
+
+<body>
+    <header class="cabeca">
+        <a href="{% url 'index' %}"><img class="cabeca_img" src="{% static 'img/Unimed_Logo1.png' %}" alt="Imagem da Logo Unimed"></a>
+        <nav class="cabeca_menu">
+            <div class="cabeca_menu_dropdown">
+                <a class="cabeca_menu_link" href="{% url 'aplicativos_index' %}">Acesso aos Aplicativos</a>
+            </div>
+            <div class="cabeca_menu_dropdown">
+                <a class="cabeca_menu_link" href="{% url 'central_aprendizagem' %}">Central de Aprendizagem</a>
+                    <div class="cabeca_menu_link_filho">
+                        <a href="{% url 'video_aulas' %}">Vídeo Aulas</a>
+                        <a href="{% url 'faq' %}">FAQ</a>
+                    </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="conteudo" style="background-image: url({% static 'img/fundo_index.webp' %});">
+        {% if request.user.is_authenticated %}
+            <div class="conteudo_usuario_logado">
+                <div class="user_login_dropdow">
+                    <a class="user_login"><button class="user_login_botao">{{ user.username }}</button></a>
+                        <div class="user_login_opcoes">
+                                <a class="user_login_botao_opcao" href="{% url 'logoff' %}">Sair</a>
+                        </div>
+                </div>
+            </div>
+        {% endif %}
+        <section class="conteudo_pri_secao">
+            <div class="conteudo_pri_secao_txt">
+                <h1 class="conteudo_pri_secao_txt_titulo"><strong>TI Unimed Noroeste Capixaba</strong></h1>
+                <h2 class="conteudo_pri_secao_txt_subtitulo">Trazendo tecnologia e inovação para a saúde de Colatina</h2>
+            </div>
+        </section>
+
+        <section class="conteudo_seg_secao">
+            <img class="conteudo_seg_secao_img" src="{% static 'img/icone_tasy.png' %}" alt="Simbolo da Philips Tasy">
+            <h3 class="conteudo_seg_secao_nome"><strong>Tasy</strong></h3>
+            <a class="conteudo_seg_secao_txt_link_botao" href="https://colatina.digisystem.cloud/#/login" target="_blank">
+                <button class="conteudo_seg_secao_txt_botao"><strong>Entrar</strong></button>
+            </a>
+            <h3 class="conteudo_seg_secao_titulo"><strong>Acesse o sistema Tasy</strong></h3>
+        </section>
+
+        <section class="conteudo_ter_secao">
+            <a href="https://www.google.com.br/" target="_blank"><img class="conteudo_ter_secao_icone" src="{% static 'img/logo_google.png' %}" alt="icone do google"></a>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <img class="rodape_img" src="{% static 'img/icone_unimed_n.png' %}" alt="Imagem da Logo de Rodape Unimed ">
+        <h3 class="rodape_assinatura">Unimed Noroeste Capixaba</h3>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página de uso da TI da Unimed Noroeste Capixaba">
+    <link rel="stylesheet" href="{% static 'css/style_erro_login.css' %}">
+    <link rel="icon" href="{% static 'img/icone_unimed1.png' %}">
+    <title>TI Hunoc - Central de Aprendizagem</title>
+</head>
+
+<body>
+    <header class="cabeca">
+        <a href="index.html"><img class="cabeca_img" src="{% static 'img/Unimed_Logo1.png' %}" alt="Imagem da Logo Unimed"></a>
+        <nav class="cabeca_menu">
+            <a class="cabeca_menu_link" href="{% url 'index' %}">Home</a>
+        </nav>
+    </header>
+
+    <main class="conteudo">
+        <section class="conteudo_pri_secao">
+            <div class="conteudo_pri_secao_txt">
+                <h1 class="conteudo_pri_secao_txt_titulo"><strong>Usuário ou senha inválido...</strong></h1>
+                <h2 class="conteudo_pri_secao_txt_subtitulo"></h2>
+            </div>
+        </section>
+
+        <section class="conteudo_botao">
+            <div class="conteudo_botao_itens">
+                <a class="conteudo_botao_link" href="{% url 'logon' %}"><button class="conteudo_botao_txt">Voltar ao Login</button></a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <img class="rodape_img" src="{% static 'img/icone_unimed_n.png' %}" alt="Imagem da Logo de Rodape Unimed ">
+        <h3 class="rodape_assinatura">Unimed Noroeste Capixaba</h3>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página de uso da TI da Unimed Noroeste Capixaba">
+    <link rel="stylesheet" href="{% static 'css/style_aplicativos_dashboards_index.css' %}">
+    <link rel="icon" href="{% static 'img/icone_unimed1.png' %}">
+    <title>TI Hunoc - Dashboards</title>
+</head>
+
+<body>
+    <script language="JavaScript">
+         var params = [
+        'height='+screen.height,
+        'width='+screen.width,
+        'fullscreen=yes'
+        ];
+
+        function abrirpagina(pagina){window.open(pagina, 'type=fullWindow', params);}
+    </script>
+    <header class="cabeca">
+        <a href="{% url 'index' %}"><img class="cabeca_img" src="{% static 'img/Unimed_Logo1.png' %}" alt="Imagem da Logo Unimed"></a>
+        <nav class="cabeca_menu">
+            <a class="cabeca_menu_link" href="{% url 'index' %}">Home</a>
+            <div class="cabeca_menu_dropdown">
+                <a class="cabeca_menu_link" href="{% url 'aplicativos_index' %}">Acesso aos Aplicativos</a>
+            </div>
+            <div class="cabeca_menu_dropdown">
+                <a class="cabeca_menu_link" href="{% url 'central_aprendizagem' %}">Central de Aprendizagem</a>
+                    <div class="cabeca_menu_link_filho">
+                        <a href="{% url 'video_aulas' %}">Vídeo Aulas</a>
+                        <a href="{% url 'faq' %}">FAQ</a>
+                    </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="conteudo" style="background-image: url({% static 'img/shape-background.svg' %});">
+        {% if request.user.is_authenticated %}
+            <div class="conteudo_usuario_logado">
+                <div class="user_login_dropdow">
+                    <a class="user_login"><button class="user_login_botao">{{ user.username }}</button></a>
+                        <div class="user_login_opcoes">
+                                <a class="user_login_botao_opcao" href="{% url 'logoff' %}">Sair</a>
+                        </div>
+                </div>
+            </div>
+        {% endif %}
+        <section class="conteudo_pri_secao">
+            <div class="conteudo_pri_secao_txt">
+                <img class="conteudo_pri_secao_txt_img" src="{% static 'img/grafico_barras_ilustracao.png' %}" alt="Imagem de dashboard do titulo.">
+                <h1 class="conteudo_pri_secao_txt_titulo"><strong>Dashboards Para Gestão Hospitalar</strong></h1>
+            </div>
+            <div class="conteudo_pri_secao_itens">
+                {% if request.user.is_authenticated %}
+                    {% for dashboard in lista_dashboard %}
+                        {% for grupo in user.groups.all %}
+                            {% if dashboard.grupo_usuario_id == grupo.id %}
+                                <a class="conteudo_pri_secao_txt_link" href="javascript:abrirpagina('{{ dashboard.dir_dashboard }}')" title="Gestão de {{ grupo.name }}">{{ dashboard.ds_dashboard }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <a class="conteudo_pri_secao_txt">Você precisa estar logado para visualizar os dashboards!</a>
+                {% endif %}
+            </div>
+
+        </section>
+
+        <section class="conteudo_seg_secao">
+            <h3 class="conteudo_seg_secao_titulo"><strong></strong></h3>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <img class="rodape_img" src="{% static 'img/icone_unimed_n.png' %}" alt="Imagem da Logo de Rodape Unimed ">
+        <h3 class="rodape_assinatura">Unimed Noroeste Capixaba</h3>
+    </footer>
+</body>
+
+</html>

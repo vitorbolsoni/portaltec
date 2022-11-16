@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página de uso da TI da Unimed Noroeste Capixaba">
+    <link rel="stylesheet" href="{% static 'css/style_central_aprendizagem_faq.css' %}">
+    <link rel="icon" href="{% static 'img/icone_unimed1.png' %}">
+    <title>TI Hunoc - FAQ</title>
+</head>
+
+<body>
+    <header class="cabeca">
+        <a href="{% url 'index' %}"><img class="cabeca_img" src="{% static 'img/Unimed_Logo1.png' %}" alt="Imagem da Logo Unimed"></a>
+        <nav class="cabeca_menu">
+            <a class="cabeca_menu_link" href="{% url 'index' %}">Home</a>
+            <div class="cabeca_menu_dropdown">
+                <a class="cabeca_menu_link" href="{% url 'aplicativos_index' %}">Acesso aos Aplicativos</a>
+            </div>
+            <div class="cabeca_menu_dropdown">
+                <a class="cabeca_menu_link" href="{% url 'central_aprendizagem' %}">Central de Aprendizagem</a>
+                    <div class="cabeca_menu_link_filho">
+                        <a href="{% url 'video_aulas' %}">Vídeo Aulas</a>
+                    </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="conteudo" style="background-image: url({% static 'img/shape-background.svg' %});">
+        {% if request.user.is_authenticated %}
+            <div class="conteudo_usuario_logado">
+                <div class="user_login_dropdow">
+                    <a class="user_login"><button class="user_login_botao">{{ user.username }}</button></a>
+                        <div class="user_login_opcoes">
+                                <a class="user_login_botao_opcao" href="{% url 'logoff' %}">Sair</a>
+                        </div>
+                </div>
+            </div>
+        {% endif %}
+        <section class="conteudo_pri_secao">
+            <div class="conteudo_pri_secao_txt">
+                <h1 class="conteudo_pri_secao_txt_titulo"><strong>FAQ Hunoc</strong></h1>
+                <h2 class="conteudo_pri_secao_txt_subtitulo">Tire suas dúvidas sobre diversos assuntos de forma simples!</h2>
+            </div>
+        </section>
+
+        <section class="conteudo_botao">
+            <div class="conteudo_botao_itens">
+                {% if lista_indice %}
+                    {% for indices in lista_indice %}
+                        <div class="conteudo_botao_pai">
+                            <a class="conteudo_botao_link_pai" href="#{{ indices.posicao_indice }}"><button class="conteudo_botao_txt_pai">{{ indices.posicao_indice }}  -  {{ indices.ds_indice }}</button></a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            <div class="busca_secao">
+                <form method="GET" id="busca_formulario">
+                    <input class="busca_input" type="text" id="buscar" name="buscar" placeholder="Buscar..." value="{{ request.GET.buscar }}"/>
+                    <i class="busca_executa" id="busca_botao"></i>
+                </form>
+            </div>
+                {% if lista_questao %}
+                    {% for indices in lista_indice %}
+                        <a style="color: #ffffff00; margin-bottom: 30px;" name="{{ indices.posicao_indice }}">{{ indices.posicao_indice }}</a>
+                        <div class="conteudo_botao_dropdown">
+                            {% for questoes in lista_questao %}
+                                {% if questoes.indice.id == indices.id %}
+                                    <div class="conteudo_botao_dropdown_filho"><a class="conteudo_botao_txt_mae">{{ questoes.indice }}</a>
+                                        <a class="conteudo_botao_link_filho"><h3 class="conteudo_botao_txt_filho">{{ indices.posicao_indice }}.{{ questoes.posicao_questao }}  -  {{ questoes.ds_questao }}</h3></a>
+                                            {% for respostas in lista_resposta %}
+                                                {% if respostas.questao.id == questoes.id %}
+                                                        <a class="conteudo_botao_link_neto"><h3 class="conteudo_botao_txt_neto">{{ indices.posicao_indice }}.{{ questoes.posicao_questao }}.{{ respostas.posicao_resposta }}:<h3 class="resposta_html" style="font-weight: 50; margin-left: 10px;">{{ respostas.ds_resposta|safe }}</h3></h3></a>
+                                                {% endif %}
+                                            {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <a>Não há questões respondidas no momento!</a>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <img class="rodape_img" src="{% static 'img/icone_unimed_n.png' %}" alt="Imagem da Logo de Rodape Unimed ">
+        <h3 class="rodape_assinatura">Unimed Noroeste Capixaba</h3>
+    </footer>
+
+</body>
+
+</html>

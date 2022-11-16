@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página de uso da TI da Unimed Noroeste Capixaba">
+    <link rel="stylesheet" href="{% static 'css/style_login_index.css' %}">
+    <link rel="icon" href="{% static 'img/icone_unimed1.png' %}">
+    <title>Login do Usuário</title>
+</head>
+
+<body>
+    <header class="cabeca">
+        <a href="{% url 'index' %}"><img class="cabeca_img" src="{% static 'img/Unimed_Logo1.png' %}" alt="Imagem da Logo Unimed"></a>
+        <nav class="cabeca_menu">
+            <div class="cabeca_menu_dropdown">
+                <a class="cabeca_menu_link" href="{% url 'index' %}">Home</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="conteudo" style="background-image: url({% static 'img/fundo_index.webp' %});">
+        <section class="conteudo_pri_secao">
+            <div class="conteudo_pri_secao_txt">
+                <h1 class="conteudo_pri_secao_txt_titulo"><strong>Login</strong></h1>
+                    <form class="conteudo_pri_secao_aut" action="{% url 'logon' %}" method="POST">{% csrf_token %}
+                        <input class="conteudo_pri_secao_autentica" type="text" placeholder="Usuario..." name="usuario">
+                        <input class="conteudo_pri_secao_autentica" type="password" placeholder="Senha..." name="senha">
+                        <input class="conteudo_pri_secao_autentica_botao" type="submit" value="Entrar">
+                    </form>
+            </div>
+        </section>
+
+        <section class="conteudo_seg_secao">
+            <h3 class="conteudo_seg_secao_nome"><strong></strong></h3>
+            <h3 class="conteudo_seg_secao_titulo"><strong></strong></h3>
+        </section>
+
+    </main>
+
+    <footer class="rodape">
+        <img class="rodape_img" src="{% static 'img/icone_unimed_n.png' %}" alt="Imagem da Logo de Rodape Unimed ">
+        <h3 class="rodape_assinatura">Unimed Noroeste Capixaba</h3>
+    </footer>
+</body>
+
+</html>
